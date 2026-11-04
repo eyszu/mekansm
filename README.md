@@ -1,6 +1,6 @@
 # mekansm
 
-A small WordPress-style blog platform. ASP.NET Core (.NET 10, Razor Pages), PostgreSQL via raw Npgsql (no ORM), Markdown posts.
+A small blog platform. ASP.NET Core (.NET 8, Razor Pages), PostgreSQL via raw Npgsql (no ORM), Markdown posts.
 
 ## Run
 
