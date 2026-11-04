@@ -1,0 +1,29 @@
+@model IReadOnlyList<Post>
+
+@if (Model.Count == 0)
+{
+    <p class="empty">Nothing published yet.</p>
+}
+else
+{
+    <ul class="grid">
+        @foreach (var p in Model)
+        {
+            var date = p.PublishedAt ?? p.CreatedAt;
+            <li>
+                <a class="card" asp-page="/Post" asp-route-slug="@p.Slug">
+                    <h3 class="card-title">@p.Title</h3>
+                    @if (!string.IsNullOrWhiteSpace(p.Excerpt))
+                    {
+                        <p class="card-excerpt">@p.Excerpt</p>
+                    }
+                    <p class="card-meta">
+                        <span>@p.AuthorName</span>
+                        <span aria-hidden="true">·</span>
+                        <time datetime="@date.ToString("yyyy-MM-dd")">@date.ToString("MMM d, yyyy")</time>
+                    </p>
+                </a>
+            </li>
+        }
+    </ul>
+}

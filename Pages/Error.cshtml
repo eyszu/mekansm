@@ -1,0 +1,11 @@
+@page
+@model ErrorModel
+@{
+    ViewData["Title"] = Model.Code == 404 ? "Not found" : "Error";
+}
+
+<section class="hero hero-sm">
+    <h1><span class="slash">/</span>@Model.Code</h1>
+    <p>@(Model.Code == 404 ? "That page doesn't exist." : "Something went wrong.")</p>
+    <p class="hero-cta"><a class="btn btn-ghost" href="/">Back home</a></p>
+</section>

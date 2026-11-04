@@ -1,0 +1,21 @@
+@page
+@model IndexModel
+@{
+    ViewData["Title"] = "";
+}
+
+<section class="hero">
+    <h1>Blog in your browser</h1>
+    <p>Markdown-first writing. Sign up with an email and a password, and publish in seconds.</p>
+    @if (User.Identity?.IsAuthenticated != true)
+    {
+        <p class="hero-cta">
+            <a class="btn btn-primary" asp-page="/Register">Start writing</a>
+            <a class="btn btn-ghost" asp-page="/Login">Log in</a>
+        </p>
+    }
+</section>
+
+<h2 class="section-title">Latest posts</h2>
+<partial name="_PostGrid" model="Model.Posts" />
+<partial name="_Pager" model="Model.Pager" />

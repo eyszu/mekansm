@@ -1,0 +1,43 @@
+@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="page-head">
+    <h1>Your posts</h1>
+    <a class="btn btn-primary" asp-page="Edit">New post</a>
+</div>
+
+@if (Model.Posts.Count == 0)
+{
+    <p class="empty">No posts yet. <a asp-page="Edit">Write your first one</a>.</p>
+}
+else
+{
+    <div class="table-wrap">
+        <table class="table">
+            <thead>
+                <tr><th>Title</th><th>Status</th><th>Updated</th><th><span class="sr">Actions</span></th></tr>
+            </thead>
+            <tbody>
+            @foreach (var p in Model.Posts)
+            {
+                <tr>
+                    <td data-label="Title"><a asp-page="Edit" asp-route-id="@p.Id">@p.Title</a></td>
+                    <td data-label="Status"><span class="badge @(p.IsPublished ? "badge-live" : "")">@(p.IsPublished ? "Published" : "Draft")</span></td>
+                    <td data-label="Updated"><time datetime="@p.UpdatedAt.ToString("yyyy-MM-dd")">@p.UpdatedAt.ToString("MMM d, yyyy")</time></td>
+                    <td class="actions">
+                        <a class="btn btn-ghost btn-sm" asp-page="/Post" asp-route-slug="@p.Slug">View</a>
+                        <a class="btn btn-ghost btn-sm" asp-page="Edit" asp-route-id="@p.Id">Edit</a>
+                        <form method="post" asp-page-handler="Delete" asp-route-id="@p.Id" class="inline"
+                              data-confirm="Delete “@p.Title”? This can't be undone.">
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+}

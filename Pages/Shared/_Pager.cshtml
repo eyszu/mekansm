@@ -1,0 +1,16 @@
+@model Pager
+
+@if (Model.TotalPages > 1)
+{
+    <nav class="pager" aria-label="Pagination">
+        @if (Model.Page > 1)
+        {
+            <a class="btn btn-ghost" href="@Url.Page(null, new { p = Model.Page - 1 })">← Newer</a>
+        }
+        <span class="muted">Page @Model.Page of @Model.TotalPages</span>
+        @if (Model.Page < Model.TotalPages)
+        {
+            <a class="btn btn-ghost" href="@Url.Page(null, new { p = Model.Page + 1 })">Older →</a>
+        }
+    </nav>
+}

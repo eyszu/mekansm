@@ -1,0 +1,34 @@
+@page "/p/{slug}"
+@model PostModel
+@{
+    var post = Model.Item!;
+    var date = post.PublishedAt ?? post.CreatedAt;
+    ViewData["Title"] = post.Title;
+    ViewData["Description"] = post.Excerpt;
+}
+
+<article class="article">
+    @if (!post.IsPublished)
+    {
+        <div class="alert alert-info">
+            This is a draft. Only you can see it.
+            <a asp-page="/Dashboard/Edit" asp-route-id="@post.Id">Edit</a>
+        </div>
+    }
+
+    <header class="article-head">
+        <h1>@post.Title</h1>
+        <p class="card-meta">
+            <a asp-page="/Author" asp-route-username="@post.AuthorName">@@@post.AuthorName</a>
+            <span aria-hidden="true">·</span>
+            <time datetime="@date.ToString("yyyy-MM-dd")">@date.ToString("MMMM d, yyyy")</time>
+            @if (Model.IsOwner && post.IsPublished)
+            {
+                <span aria-hidden="true">·</span>
+                <a asp-page="/Dashboard/Edit" asp-route-id="@post.Id">Edit</a>
+            }
+        </p>
+    </header>
+
+    <div class="prose">@Html.Raw(Model.Html)</div>
+</article>

@@ -1,0 +1,13 @@
+@page "/author/{username}"
+@model AuthorModel
+@{
+    ViewData["Title"] = Model.Username;
+}
+
+<section class="hero hero-sm">
+    <h1><span class="slash">@@</span>@Model.Username</h1>
+    <p>Posts by this author.</p>
+</section>
+
+<partial name="_PostGrid" model="Model.Posts" />
+<partial name="_Pager" model="Model.Pager" />

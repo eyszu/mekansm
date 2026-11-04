@@ -1,0 +1,34 @@
+@page
+@model LoginModel
+@{
+    ViewData["Title"] = "Log in";
+}
+
+<section class="auth">
+    <h1>Welcome back</h1>
+
+    <form method="post" novalidate>
+        <input type="hidden" asp-for="ReturnUrl" />
+        <div asp-validation-summary="ModelOnly" class="alert alert-error"></div>
+
+        <div class="field">
+            <label asp-for="Input.Email">Email</label>
+            <input asp-for="Input.Email" type="email" autocomplete="email" autofocus required maxlength="254" />
+            <span asp-validation-for="Input.Email" class="field-error"></span>
+        </div>
+
+        <div class="field">
+            <label asp-for="Input.Password">Password</label>
+            <input asp-for="Input.Password" type="password" autocomplete="current-password" required maxlength="128" />
+            <span asp-validation-for="Input.Password" class="field-error"></span>
+        </div>
+
+        <label class="check">
+            <input asp-for="Input.RememberMe" type="checkbox" /> Keep me signed in
+        </label>
+
+        <button type="submit" class="btn btn-primary btn-block">Log in</button>
+    </form>
+
+    <p class="muted center">New here? <a asp-page="/Register">Create an account</a></p>
+</section>

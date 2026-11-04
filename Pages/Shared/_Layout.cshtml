@@ -1,0 +1,63 @@
+@{
+    var title = ViewData["Title"] as string;
+    var description = ViewData["Description"] as string
+        ?? "mekansm is a minimal blogging platform. Write in Markdown, publish in seconds.";
+    var signedIn = User.Identity?.IsAuthenticated == true;
+}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#0f0f14">
+    <title>@(string.IsNullOrEmpty(title) ? "mekansm: write in Markdown, publish in seconds" : title + " · mekansm")</title>
+    <meta name="description" content="@description">
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true">
+    <link rel="alternate" type="application/rss+xml" title="mekansm" href="/feed.xml">
+</head>
+<body>
+    <a class="skip" href="#main">Skip to content</a>
+
+    <header class="site-header">
+        <div class="wrap bar">
+            <a class="logo" href="/" aria-label="mekansm home"><span class="slash">/</span>mekansm</a>
+            <nav class="nav" aria-label="Main">
+                <a href="/">Home</a>
+                @if (signedIn)
+                {
+                    <a asp-page="/Dashboard/Index">Dashboard</a>
+                    <a class="btn btn-primary btn-sm" asp-page="/Dashboard/Edit">Write</a>
+                    <form method="post" asp-page="/Logout" class="inline">
+                        <button type="submit" class="linklike" title="Signed in as @User.Identity!.Name">Log out</button>
+                    </form>
+                }
+                else
+                {
+                    <a asp-page="/Login">Log in</a>
+                    <a class="btn btn-primary btn-sm" asp-page="/Register">Sign up</a>
+                }
+            </nav>
+        </div>
+    </header>
+
+    <main id="main" class="wrap main">
+        @if (TempData["Flash"] is string flash)
+        {
+            <div class="flash" role="status">@flash</div>
+        }
+        @RenderBody()
+    </main>
+
+    <footer class="site-footer">
+        <div class="wrap foot">
+            <a class="logo small" href="/"><span class="slash">/</span>mekansm</a>
+            <a href="/feed.xml">RSS</a>
+            <span class="muted">© @DateTime.UtcNow.Year mekansm</span>
+            <span class="hex" aria-hidden="true">6D 65 6B 61</span>
+        </div>
+    </footer>
+
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
